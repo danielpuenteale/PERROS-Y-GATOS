@@ -24,8 +24,6 @@ else:
 model = model_from_json(model_json)
 model.load_weights("model_gats_gossos.weights.h5")
 
-    model.load_weights("model_gats_gossos.weights.h5")
-
     if uploaded_file:
         try:
             image = Image.open(uploaded_file).convert("RGB").resize((100, 100))
