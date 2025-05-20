@@ -2,7 +2,7 @@
 # ✅ Versió final per carregar model optimitzat (JSON + WEIGHTS), amb control d'errors
 
 import streamlit as st
-from tensorflow.keras.models import model_from
+from tensorflow.keras.models import model_from_json()
 from PIL import Image, UnidentifiedImageError
 import numpy as np
 import os
