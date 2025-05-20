@@ -1,3 +1,6 @@
+# 📁 app.py – STREAMLIT
+# ✅ Versió final per carregar model optimitzat (JSON + WEIGHTS), amb control d'errors
+
 import streamlit as st
 from tensorflow.keras.models import model_from_json
 from PIL import Image, UnidentifiedImageError
@@ -8,11 +11,13 @@ st.set_page_config(page_title="Classificador Gats vs Gossos", layout="centered")
 st.title("🐶 Classificador de Gossos i Gats 🐱")
 st.markdown("Puja una imatge i la IA et dirà si veu un gos o un gat! 🧠")
 
-uploaded_file = st.file_uploader("📤 Pujar imatge (jpg, png)", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("📄 Pujar imatge (jpg, png)", type=["jpg", "jpeg", "png"])
 
+# Verifiquem que els fitxers del model existeixen
 if not os.path.exists("model_gats_gossos.json") or not os.path.exists("model_gats_gossos.weights.h5"):
     st.error("❌ El model no s'ha trobat. Assegura't que els fitxers JSON i WEIGHTS estiguin pujats correctament al teu repositori.")
 else:
+    # Carreguem el model un cop, fora del bloc 'if uploaded_file'
     with open("model_gats_gossos.json", "r") as json_file:
         model_json = json_file.read()
 
@@ -24,9 +29,11 @@ else:
             image = Image.open(uploaded_file).convert("RGB").resize((100, 100))
             st.image(image, caption='📷 Imatge pujada', use_container_width=True)
 
+            # Preprocessar imatge
             img_array = np.array(image) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
 
+            # Predicció
             prediction = model.predict(img_array)
             prob = float(prediction[0])
 
@@ -37,5 +44,3 @@ else:
 
         except UnidentifiedImageError:
             st.error("❌ No s'ha pogut llegir la imatge. Si us plau, puja un arxiu .jpg o .png vàlid.")
-        except Exception as e:
-            st.error(f"❌ S'ha produït un error inesperat: {str(e)}")
