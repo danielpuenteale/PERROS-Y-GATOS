@@ -21,7 +21,9 @@ else:
     with open("model_gats_gossos.json", "r") as json_file:
         model_json = json_file.read()
 
-    model = model_from_json
+model = model_from_json(model_json)
+model.load_weights("model_gats_gossos.weights.h5")
+
     model.load_weights("model_gats_gossos.weights.h5")
 
     if uploaded_file:
