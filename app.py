@@ -37,3 +37,5 @@ else:
 
         except UnidentifiedImageError:
             st.error("❌ No s'ha pogut llegir la imatge. Si us plau, puja un arxiu .jpg o .png vàlid.")
+        except Exception as e:
+            st.error(f"❌ S'ha produït un error inesperat: {str(e)}")
